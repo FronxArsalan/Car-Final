@@ -7,6 +7,8 @@ use App\Rules\DotCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Imports\TiresImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TireController extends Controller
 {
@@ -131,4 +133,22 @@ class TireController extends Controller
         ];
         return view('admin.tires.inventory', $data);
     }
+
+    // showImportForm
+    public function showImportForm()
+    {
+        $data['header_title'] = 'Import Tires';
+        return view('admin.tires.import', $data);
+    }
+    // import
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+    
+        Excel::import(new TiresImport, $request->file('file'));
+        return redirect()->route('tires.index')->with('success', 'Products imported successfully!');
+    }
+
 }

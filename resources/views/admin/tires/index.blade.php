@@ -29,7 +29,10 @@
                             <div class="card-body">
                                 <div class="card-header d-flex align-items-center justify-content-between">
                                     <h4 class="card-title">Tire List</h4>
-                                    <a href="{{ route('tires.create') }}" class="btn btn-primary mb-3">Add New Tire</a>
+                                    <div>
+                                        <a href="{{ route('tires.create') }}" class="btn btn-primary mb-3">Add New Tire</a>
+                                        <a href="{{ route('tires.import.form') }}" class="btn btn-secondary mb-3">Import CSV</a>
+                                    </div>
                                 </div>
 
 
