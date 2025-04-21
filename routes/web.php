@@ -27,4 +27,7 @@ Route::middleware('authenticate')->group(function () {
     Route::get('/tire/inventory', [TireController::class, 'inventory'])->name('tires.inventory');
     // search
     Route::get('/tire/search', [TireController::class, 'search'])->name('tires.search');
+    Route::get('tire/import', [TireController::class, 'showImportForm'])->name('tires.import.form');
+    Route::post('tire/import', [TireController::class, 'import'])->name('tires.import');
+
 });
