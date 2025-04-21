@@ -179,43 +179,28 @@
                     </li>
 
                     <li class="dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#"
-                            role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ asset('assets/images/flags/us.jpg') }}" alt="user-image"
-                                class="me-0 me-sm-1" height="12">
-                            <span class="align-middle d-none d-lg-inline-block">English</span> <i
-                                class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
+                        @php
+                            $locale = app()->getLocale();
+                            $languages = [
+                                'en' => ['name' => __('message.English'), 'flag' => 'us.jpg'],
+                                'fr' => ['name' => __('message.Franch'), 'flag' => 'french.jpg'],
+                            ];
+                        @endphp
+                        <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ asset('assets/images/flags/' . $languages[$locale]['flag']) }}" alt="Flag" class="me-0 me-sm-1" height="12">
+                            <span class="align-middle d-none d-lg-inline-block">{{ $languages[$locale]['name'] }}</span>
+                            <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/images/flags/germany.jpg') }}" alt="user-image"
-                                    class="me-1" height="12">
-                                <span class="align-middle">German</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/images/flags/italy.jpg') }}" alt="user-image"
-                                    class="me-1" height="12">
-                                <span class="align-middle">Italian</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/images/flags/spain.jpg') }}" alt="user-image"
-                                    class="me-1" height="12">
-                                <span class="align-middle">Spanish</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image"
-                                    class="me-1" height="12">
-                                <span class="align-middle">z</span>
-                            </a>
-
+                            @foreach ($languages as $key => $lang)
+                                @if ($key !== $locale)
+                                    <a href="{{ route('lang.change', ['lang' => $key]) }}" class="dropdown-item">
+                                        <img src="{{ asset('assets/images/flags/' . $lang['flag']) }}" alt="{{ $lang['name'] }}" class="me-1" height="12">
+                                        <span class="align-middle">{{ $lang['name'] }}</span>
+                                    </a>
+                                @endif
+                            @endforeach
                         </div>
                     </li>
 
@@ -561,6 +546,16 @@
                             <span> Recherche Rapide </span>
                         </a>
                     </li>
+
+                    <li class="side-nav-item">
+                        <a href="{{ route('user.index')}}" class="side-nav-link">
+                            <i class="ri-user-line"></i>
+                            <!-- <span class="badge bg-success float-end">9+</span> -->
+                            <span> Add Users </span>
+                        </a>
+                    </li>
+
+
                     <li class="side-nav-item">
                         <a href="{{ route('products.index') }}" class="side-nav-link">
                             <i class="ri-shopping-cart-fill"></i>
